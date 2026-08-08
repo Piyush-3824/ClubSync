@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClubSync — Discover. Apply. Belong.</title>
+  <meta name="description" content="ClubSync is the ultimate college club recruitment portal. Discover clubs, apply, and find your community.">
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       CYBER GRID BACKGROUND (user provided)
+  ════════════════════════════════════════ -->
+  <div class="grid-container">
+    <div class="plane">
+      <div class="grid"></div>
+      <div class="glow"></div>
+    </div>
+    <div class="plane">
+      <div class="grid"></div>
+      <div class="glow"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       NAVIGATION
+  ════════════════════════════════════════ -->
+  <nav class="landing-nav">
+    <a href="index.html" class="landing-nav-brand">ClubSync</a>
+    <ul class="landing-nav-links">
+      <li><a href="pages/explore.html">Explore</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="landing-nav-actions">
+      <a href="pages/login.html" class="nav-login-btn" id="nav-login-btn">Login</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════ -->
+  <main class="hero-content" id="home">
+    <p class="brand-pretitle">// College Club Recruitment Portal</p>
+
+    <!-- Main heading uses user's h1 style exactly -->
+    <h1 class="hero-title" id="hero-title">ClubSync</h1>
+
+    <p class="hero-tagline">Discover. Apply. Belong.</p>
+
+    <div class="hero-cta">
+      <a href="pages/explore.html" class="cta-primary" id="cta-explore">
+        <span>⬡</span> Explore Clubs
+      </a>
+      <a href="pages/login.html" class="cta-secondary" id="cta-login">
+        Login / Register →
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num" id="stat-clubs">120+</span>
+        <span class="stat-text">Active Clubs</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-students">4,800+</span>
+        <span class="stat-text">Students</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-drives">38</span>
+        <span class="stat-text">Active Drives</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" id="stat-colleges">12</span>
+        <span class="stat-text">Colleges</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint" id="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       FEATURES SECTION
+  ════════════════════════════════════════ -->
+  <section class="features-section" id="features">
+    <p class="section-label">// System Capabilities</p>
+    <h2 class="section-heading">What ClubSync Does</h2>
+
+    <div class="features-grid">
+      <div class="feature-card" id="feat-discover">
+        <span class="feature-icon">🔍</span>
+        <h3 class="feature-title">Discover Clubs</h3>
+        <p class="feature-desc">Browse 120+ verified college clubs across technical, cultural, sports, and social categories. Filter by interest, tag, or activity.</p>
+      </div>
+      <div class="feature-card" id="feat-apply">
+        <span class="feature-icon">📋</span>
+        <h3 class="feature-title">Apply Instantly</h3>
+        <p class="feature-desc">Submit applications directly through the portal. Track status, get interview slots, and receive decisions — all in one place.</p>
+      </div>
+      <div class="feature-card" id="feat-save">
+        <span class="feature-icon">⭐</span>
+        <h3 class="feature-title">Save & Compare</h3>
+        <p class="feature-desc">Bookmark clubs you love. Compare requirements, timelines, and perks side-by-side before committing to an application.</p>
+      </div>
+      <div class="feature-card" id="feat-notify">
+        <span class="feature-icon">🔔</span>
+        <h3 class="feature-title">Live Notifications</h3>
+        <p class="feature-desc">Never miss a recruitment drive. Get real-time alerts for deadlines, interview schedules, and application updates.</p>
+      </div>
+      <div class="feature-card" id="feat-coord">
+        <span class="feature-icon">⚙️</span>
+        <h3 class="feature-title">Coordinator Tools</h3>
+        <p class="feature-desc">Club coordinators can manage drives, review applicants, schedule interviews, and track member analytics — all from one dashboard.</p>
+      </div>
+      <div class="feature-card" id="feat-community">
+        <span class="feature-icon">🤝</span>
+        <h3 class="feature-title">Build Community</h3>
+        <p class="feature-desc">Connect with like-minded peers. ClubSync isn't just about joining clubs — it's about finding your place in college life.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── JS: animate stats counting ── -->
+  <script>
+    function animateCounter(el, target, suffix = '') {
+      let start = 0;
+      const duration = 2000;
+      const step = 16;
+      const increment = target / (duration / step);
+      const timer = setInterval(() => {
+        start += increment;
+        if (start >= target) { start = target; clearInterval(timer); }
+        el.textContent = Math.floor(start) + suffix;
+      }, step);
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(document.getElementById('stat-clubs'), 120, '+');
+          animateCounter(document.getElementById('stat-students'), 4800, '+');
+          animateCounter(document.getElementById('stat-drives'), 38, '');
+          animateCounter(document.getElementById('stat-colleges'), 12, '');
+          statsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const statsEl = document.querySelector('.hero-stats');
+    if (statsEl) statsObserver.observe(statsEl);
+
+    window.addEventListener('scroll', () => {
+      const hint = document.getElementById('scroll-hint');
+      if (hint) hint.style.opacity = window.scrollY > 50 ? '0' : '1';
+    });
+  </script>
+
+</body>
+</html>

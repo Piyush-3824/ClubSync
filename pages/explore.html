@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClubSync — Explore Clubs</title>
+  <meta name="description" content="Explore and discover clubs at your college. Filter by category, search by name, and find your community on ClubSync.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/explore.css">
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="ambient-bg">
+    <div class="ambient-blob ambient-blob-1"></div>
+    <div class="ambient-blob ambient-blob-2"></div>
+    <div class="ambient-blob ambient-blob-3"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="navbar-brand" id="nav-brand">
+      <div class="brand-logo">CS</div>
+      <span class="brand-name">ClubSync</span>
+    </a>
+
+    <ul class="navbar-nav">
+      <li><a href="explore.html" class="nav-link active" id="nav-explore">Explore</a></li>
+      <li><a href="#" class="nav-link" id="nav-events">Events</a></li>
+      <li><a href="#" class="nav-link" id="nav-saved">Saved</a></li>
+      <li><a href="#" class="nav-link" id="nav-applications">My Applications</a></li>
+    </ul>
+
+    <div class="navbar-actions">
+      <button class="btn btn-ghost btn-sm" id="nav-notifications" aria-label="Notifications">🔔</button>
+      <a href="login.html" class="btn btn-primary btn-sm" id="nav-login-cta">Login</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       MAIN CONTENT
+  ════════════════════════════════════════ -->
+  <div class="page-wrapper">
+    <main class="container">
+
+      <!-- ── Page Header ── -->
+      <div class="page-header">
+        <div class="page-header-inner">
+          <div>
+            <h1 class="page-title">Explore Clubs</h1>
+            <p class="page-subtitle">Discover communities that match your passion and ambition</p>
+          </div>
+          <div class="header-stats">
+            <div class="header-stat">
+              <span class="stat-value" id="total-clubs-count">120</span>
+              <span class="stat-label">Total Clubs</span>
+            </div>
+            <div class="header-stat">
+              <span class="stat-value" style="color: var(--accent-teal);" id="active-drives-count">38</span>
+              <span class="stat-label">Active Drives</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Search & Filter Bar ── -->
+      <div class="search-filter-bar">
+        <div class="search-wrapper">
+          <div class="input-wrapper" style="flex:1;">
+            <span class="input-icon">🔍</span>
+            <input type="search" class="input-field" id="search-input"
+              placeholder="Search clubs by name, tag, or description..."
+              aria-label="Search clubs" autocomplete="off">
+          </div>
+        </div>
+        <div class="view-toggle">
+          <button class="view-btn active" id="view-grid-btn" aria-label="Grid view" title="Grid view"
+            onclick="setView('grid')">⊞</button>
+          <button class="view-btn" id="view-list-btn" aria-label="List view" title="List view"
+            onclick="setView('list')">☰</button>
+        </div>
+      </div>
+
+      <!-- ── Category Filter Chips ── -->
+      <div class="filter-row" id="filter-row" role="group" aria-label="Filter by category">
+        <button class="filter-chip active" id="filter-all" onclick="filterCategory('all', this)">All Clubs</button>
+        <button class="filter-chip" id="filter-technical" onclick="filterCategory('technical', this)">⚙️ Technical</button>
+        <button class="filter-chip" id="filter-cultural" onclick="filterCategory('cultural', this)">🎭 Cultural</button>
+        <button class="filter-chip" id="filter-sports" onclick="filterCategory('sports', this)">⚽ Sports</button>
+        <button class="filter-chip" id="filter-social" onclick="filterCategory('social', this)">🤝 Social</button>
+        <button class="filter-chip" id="filter-arts" onclick="filterCategory('arts', this)">🎨 Arts</button>
+        <button class="filter-chip" id="filter-academic" onclick="filterCategory('academic', this)">📚 Academic</button>
+        <button class="filter-chip" id="filter-entrepreneurship" onclick="filterCategory('entrepreneurship', this)">🚀 Entrepreneurship</button>
+        <button class="filter-chip" id="filter-music" onclick="filterCategory('music', this)">🎵 Music</button>
+      </div>
+
+      <!-- ── Sort + Results Count ── -->
+      <div class="results-bar">
+        <p class="results-count" id="results-count">Showing <strong>24</strong> clubs</p>
+        <div class="sort-wrapper">
+          <label class="sort-label" for="sort-select">Sort:</label>
+          <select class="sort-select" id="sort-select" onchange="sortClubs(this.value)">
+            <option value="popular">Most Popular</option>
+            <option value="newest">Newest</option>
+            <option value="alphabetical">A–Z</option>
+            <option value="members">Most Members</option>
+            <option value="recruiting">Recruiting Now</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ── Club Cards Grid ── -->
+      <div class="clubs-grid" id="clubs-grid"></div>
+
+      <!-- ── Pagination ── -->
+      <div class="pagination" id="pagination">
+        <button class="page-btn" id="prev-btn" onclick="changePage(-1)">← Prev</button>
+        <div class="page-numbers" id="page-numbers"></div>
+        <button class="page-btn" id="next-btn" onclick="changePage(1)">Next →</button>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../js/clubs.js"></script>
+  <script src="../js/explore.js"></script>
+</body>
+</html>

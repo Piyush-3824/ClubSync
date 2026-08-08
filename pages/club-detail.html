@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClubSync — Club Detail</title>
+  <meta name="description" content="View detailed club information, apply to join, and explore events on ClubSync.">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/club-detail.css">
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="ambient-bg">
+    <div class="ambient-blob ambient-blob-1"></div>
+    <div class="ambient-blob ambient-blob-2"></div>
+    <div class="ambient-blob ambient-blob-3"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="navbar-brand" id="nav-brand">
+      <div class="brand-logo">CS</div>
+      <span class="brand-name">ClubSync</span>
+    </a>
+    <ul class="navbar-nav">
+      <li><a href="explore.html" class="nav-link" id="nav-explore">Explore</a></li>
+      <li><a href="#" class="nav-link" id="nav-events">Events</a></li>
+      <li><a href="#" class="nav-link" id="nav-saved">Saved</a></li>
+      <li><a href="#" class="nav-link" id="nav-applications">My Applications</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <button class="btn btn-ghost btn-sm" id="nav-notifications" aria-label="Notifications">🔔</button>
+      <a href="login.html" class="btn btn-primary btn-sm" id="nav-login-cta">Login</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       CLUB DETAIL CONTENT
+  ════════════════════════════════════════ -->
+  <div class="page-wrapper" id="page-wrapper">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <div class="breadcrumb" id="breadcrumb">
+        <a href="explore.html" class="breadcrumb-link">Explore</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current" id="bc-club-name">Loading...</span>
+      </div>
+
+      <!-- ── Hero Section ── -->
+      <div class="club-hero" id="club-hero">
+        <div class="hero-banner" id="hero-banner">
+          <div class="hero-banner-bg" id="hero-banner-bg"></div>
+          <div class="hero-banner-pattern"></div>
+          <div class="hero-banner-overlay"></div>
+          <div class="hero-actions">
+            <button class="hero-action-btn" id="detail-save-btn" onclick="toggleDetailSave()" aria-label="Save club">☆ Save</button>
+            <button class="hero-action-btn" id="detail-share-btn" onclick="shareClub()" aria-label="Share club">↗ Share</button>
+          </div>
+        </div>
+
+        <div class="club-info-row">
+          <div class="club-avatar" id="club-avatar">?</div>
+          <div class="club-info-main">
+            <div class="club-info-top">
+              <div>
+                <div class="club-info-badges" id="club-info-badges"></div>
+                <h1 class="club-full-name" id="club-full-name">Loading...</h1>
+              </div>
+              <div class="hero-cta-group">
+                <button class="btn btn-primary btn-lg" id="apply-btn" onclick="handleApply()">
+                  Apply Now →
+                </button>
+              </div>
+            </div>
+            <div class="quick-stats" id="quick-stats">
+              <div class="quick-stat">
+                <span class="quick-stat-val" id="qs-members">—</span>
+                <span class="quick-stat-label">Members</span>
+              </div>
+              <div class="quick-stat-divider"></div>
+              <div class="quick-stat">
+                <span class="quick-stat-val" id="qs-founded">—</span>
+                <span class="quick-stat-label">Founded</span>
+              </div>
+              <div class="quick-stat-divider"></div>
+              <div class="quick-stat">
+                <span class="quick-stat-val" id="qs-events">—</span>
+                <span class="quick-stat-label">Events</span>
+              </div>
+              <div class="quick-stat-divider"></div>
+              <div class="quick-stat">
+                <span class="quick-stat-val" id="qs-rating">—</span>
+                <span class="quick-stat-label">Rating</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Main Layout: 2 columns ── -->
+      <div class="detail-layout">
+
+        <!-- LEFT: Main Content -->
+        <div class="detail-main">
+          <div class="glass-card detail-section" id="section-about">
+            <div class="section-header">
+              <h2 class="section-title">About</h2>
+            </div>
+            <p class="about-text" id="about-text">Loading...</p>
+            <div class="tags-row" id="tags-row"></div>
+          </div>
+
+          <div class="glass-card detail-section" id="section-activities">
+            <div class="section-header">
+              <h2 class="section-title">What We Do</h2>
+            </div>
+            <div class="activities-grid" id="activities-grid"></div>
+          </div>
+
+          <div class="glass-card detail-section" id="section-events">
+            <div class="section-header">
+              <h2 class="section-title">Upcoming Events</h2>
+              <span class="badge badge-green" id="events-badge">— events</span>
+            </div>
+            <div class="events-list" id="events-list"></div>
+          </div>
+
+          <div class="glass-card detail-section" id="section-team">
+            <div class="section-header">
+              <h2 class="section-title">Core Team</h2>
+            </div>
+            <div class="team-grid" id="team-grid"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Sidebar -->
+        <div class="detail-sidebar">
+          <div class="glass-card sidebar-card" id="sidebar-apply-card">
+            <div class="sidebar-card-header">
+              <h3 class="sidebar-card-title">Application Status</h3>
+              <div class="glow-dot" id="recruit-dot"></div>
+            </div>
+            <div class="app-status-body" id="app-status-body"></div>
+          </div>
+
+          <div class="glass-card sidebar-card" id="sidebar-deadline-card">
+            <h3 class="sidebar-card-title">Key Dates</h3>
+            <div class="dates-list" id="dates-list"></div>
+          </div>
+
+          <div class="glass-card sidebar-card" id="sidebar-req-card">
+            <h3 class="sidebar-card-title">Requirements</h3>
+            <ul class="req-list" id="req-list"></ul>
+          </div>
+
+          <div class="glass-card sidebar-card" id="sidebar-similar">
+            <h3 class="sidebar-card-title">Similar Clubs</h3>
+            <div class="similar-list" id="similar-list"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Apply Modal ── -->
+  <div class="modal-overlay" id="apply-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Apply to Club</h2>
+        <button class="modal-close" id="modal-close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
+      </div>
+      <form id="apply-form" onsubmit="submitApplication(event)">
+        <div class="modal-body">
+          <div class="form-group-modal">
+            <label class="modal-label" for="app-name">Full Name</label>
+            <input type="text" id="app-name" class="modal-input" placeholder="Your full name" required>
+          </div>
+          <div class="form-group-modal">
+            <label class="modal-label" for="app-email">College Email</label>
+            <input type="email" id="app-email" class="modal-input" placeholder="you@college.edu" required>
+          </div>
+          <div class="form-group-modal">
+            <label class="modal-label" for="app-year">Year of Study</label>
+            <select id="app-year" class="modal-input">
+              <option value="">Select year</option>
+              <option value="1">1st Year</option>
+              <option value="2">2nd Year</option>
+              <option value="3">3rd Year</option>
+              <option value="4">4th Year</option>
+            </select>
+          </div>
+          <div class="form-group-modal">
+            <label class="modal-label" for="app-why">Why do you want to join?</label>
+            <textarea id="app-why" class="modal-input modal-textarea"
+              placeholder="Tell us about your interest, relevant skills, or experience..."
+              rows="4" required></textarea>
+          </div>
+          <div class="form-group-modal">
+            <label class="modal-label" for="app-skills">Relevant Skills / Experience</label>
+            <input type="text" id="app-skills" class="modal-input"
+              placeholder="e.g. Python, Photography, Leadership..." required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="modal-submit-btn">Submit Application →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Success Toast ── -->
+  <div class="toast" id="success-toast" role="alert">
+    ✅ Application submitted successfully! We'll reach out soon.
+  </div>
+
+  <script src="../js/clubs.js"></script>
+  <script src="../js/club-detail.js"></script>
+</body>
+</html>
