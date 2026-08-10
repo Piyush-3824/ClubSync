@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recruiter Dashboard — ClubSync</title>
+  <meta name="description"
+    content="ClubSync Recruiter Dashboard — monitor applications, shortlisted candidates, interviews, and active recruitment drives.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+
+  <!-- Dashboard CSS -->
+  <link rel="stylesheet" href="../../css/recruiter-dashboard.css">
+
+  <!-- React & Babel (CDN — no build step needed) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+     DASHBOARD ROOT
+════════════════════════════════════════════════════════════ -->
+  <div class="dashboard-root">
+
+    <!-- ═══════════════════
+       SIDEBAR
+  ══════════════════════ -->
+    <aside class="dash-sidebar" id="dash-sidebar" aria-label="Recruiter navigation">
+
+      <!-- Brand -->
+      <a href="../../index.html" class="sidebar-brand" id="sidebar-brand">
+        <div class="sidebar-logo-icon">CS</div>
+        <div>
+          <span class="sidebar-logo-text">ClubSync</span>
+          <span class="sidebar-logo-sub">Recruiter Portal</span>
+        </div>
+      </a>
+
+      <!-- Main Nav -->
+      <span class="sidebar-section-label">Menu</span>
+      <ul class="sidebar-nav" role="navigation" aria-label="Sidebar navigation">
+
+        <li class="sidebar-nav-item">
+          <a href="dashboard.html" class="sidebar-nav-link active" id="nav-dashboard" aria-current="page">
+            <span class="sidebar-nav-icon">📊</span>
+            Dashboard
+          </a>
+        </li>
+
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" id="nav-drives"
+            onclick="showToast('Recruitment Drives page coming soon.','info'); return false;">
+            <span class="sidebar-nav-icon">📁</span>
+            Recruitment Drives
+            <span class="sidebar-nav-badge">3</span>
+          </a>
+        </li>
+
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" id="nav-applicants"
+            onclick="showToast('Applicants page coming soon.','info'); return false;">
+            <span class="sidebar-nav-icon">👥</span>
+            Applicants
+            <span class="sidebar-nav-badge">84</span>
+          </a>
+        </li>
+
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" id="nav-interviews"
+            onclick="showToast('Interview Scheduler coming soon.','info'); return false;">
+            <span class="sidebar-nav-icon">🗓️</span>
+            Interviews
+            <span class="sidebar-nav-badge">12</span>
+          </a>
+        </li>
+
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" id="nav-members"
+            onclick="showToast('Members page coming soon.','info'); return false;">
+            <span class="sidebar-nav-icon">🏅</span>
+            Members
+          </a>
+        </li>
+
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" id="nav-analytics"
+            onclick="showToast('Analytics page coming soon.','info'); return false;">
+            <span class="sidebar-nav-icon">📈</span>
+            Analytics
+          </a>
+        </li>
+
+      </ul>
+
+      <!-- Footer links -->
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-link" id="sidebar-settings" onclick="showToast('Settings coming soon.','info')">
+          <span>⚙️</span> Settings
+        </div>
+        <a href="../../pages/login.html" class="sidebar-footer-link" id="sidebar-logout">
+          <span>🚪</span> Log out
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- Sidebar overlay (mobile backdrop) -->
+    <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- ═══════════════════
+       MAIN AREA
+  ══════════════════════ -->
+    <div class="dash-main" id="dash-main">
+
+      <!-- ── TOP NAVBAR ── -->
+      <header class="dash-topbar" role="banner">
+
+        <div class="topbar-left">
+          <!-- Mobile hamburger -->
+          <button class="sidebar-toggle-btn" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+
+          <!-- Search -->
+          <div class="topbar-search">
+            <span class="topbar-search-icon">🔍</span>
+            <input type="search" class="topbar-search-input" id="topbar-search" placeholder="Search applicants, drives…"
+              aria-label="Search" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="topbar-right">
+
+          <!-- Create New button -->
+          <button class="btn-create-new" id="topbar-create-btn" onclick="quickAction('Create Recruitment')">
+            <span>＋</span>
+            <span>Create New</span>
+          </button>
+
+          <!-- Notification bell -->
+          <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications" aria-haspopup="true">
+            🔔
+            <span class="notif-badge" id="notif-badge">2</span>
+          </button>
+
+          <!-- Profile -->
+          <div class="topbar-profile" id="profile-btn" role="button" aria-haspopup="true" aria-expanded="false"
+            tabindex="0">
+            <div class="topbar-avatar">AJ</div>
+            <div>
+              <span class="topbar-profile-name">Alex Johnson</span>
+              <span class="topbar-profile-role">Coordinator</span>
+            </div>
+            <span class="topbar-dropdown-arrow">▾</span>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown" id="profile-dropdown" role="menu">
+              <div class="dropdown-item" role="menuitem">👤 My Profile</div>
+              <div class="dropdown-item" role="menuitem">⚙️ Account Settings</div>
+              <div class="dropdown-item" role="menuitem">🏢 Club Settings</div>
+              <div class="dropdown-divider"></div>
+              <a href="../../pages/login.html" class="dropdown-item" role="menuitem">🚪 Log Out</a>
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- Notification Panel (absolute, below topbar) -->
+      <div class="notif-panel" id="notif-panel" role="dialog" aria-label="Notifications">
+        <div class="notif-panel-header">
+          <span class="notif-panel-title">Notifications</span>
+          <button class="notif-mark-all" onclick="markAllRead()">Mark all as read</button>
+        </div>
+        <div id="notif-list"></div>
+      </div>
+
+      <!-- ── MAIN CONTENT ── -->
+      <main class="dash-content" id="dash-content">
+
+        <!-- Welcome Section -->
+        <section class="welcome-section anim-fade-up" aria-label="Welcome">
+          <div>
+            <h1 class="welcome-greeting">
+              Good Morning, Recruiter <span class="welcome-emoji">👋</span>
+            </h1>
+            <p class="welcome-subtitle">
+              Here's an overview of your recruitment activities.
+            </p>
+          </div>
+          <div class="welcome-date" id="welcome-date">
+            <!-- filled by JS -->
+          </div>
+        </section>
+
+        <!-- ── STAT CARDS (React) ── -->
+        <!-- React mounts directly into this section so cards are grid children -->
+        <section class="stat-cards-row" id="dash-cards-root" aria-label="Key metrics">
+        </section>
+
+        <!-- ── MAIN GRID ── -->
+        <div class="dash-grid">
+
+          <!-- Recent Activity Panel -->
+          <section class="panel anim-fade-up" aria-labelledby="activity-heading">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title" id="activity-heading">Recent Activity</h2>
+                <p class="panel-subtitle">Latest applicant updates</p>
+              </div>
+              <button class="panel-action-btn" onclick="showToast('Full activity log coming soon.','info')">
+                View All →
+              </button>
+            </div>
+            <ul class="activity-list" id="activity-list" aria-label="Activity feed">
+              <!-- rendered by JS -->
+            </ul>
+          </section>
+
+          <!-- Upcoming Interviews Panel -->
+          <section class="panel anim-fade-up" aria-labelledby="schedule-heading">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title" id="schedule-heading">Upcoming Interviews</h2>
+                <p class="panel-subtitle">This week's schedule</p>
+              </div>
+              <button class="panel-action-btn" onclick="quickAction('Schedule Interview')">
+                + Schedule
+              </button>
+            </div>
+            <ul class="schedule-list" id="schedule-list" aria-label="Interview schedule">
+              <!-- rendered by JS -->
+            </ul>
+          </section>
+
+          <!-- Active Recruitment Drives (full width) -->
+          <section class="panel dash-grid-full anim-fade-up" aria-labelledby="drives-heading">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title" id="drives-heading">Active Recruitment</h2>
+                <p class="panel-subtitle">Dashboard preview — 3 active drives</p>
+              </div>
+              <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <button class="panel-action-btn" onclick="showToast('Filters coming soon.','info')">
+                  ⚙ Filters
+                </button>
+                <button class="panel-action-btn" onclick="quickAction('Create Recruitment')">
+                  + New Drive
+                </button>
+              </div>
+            </div>
+            <div class="table-scroll-wrap">
+              <table class="recruitment-table" aria-label="Active recruitment drives">
+                <thead>
+                  <tr>
+                    <th>Drive Name</th>
+                    <th>Applications</th>
+                    <th>Status</th>
+                    <th>Deadline</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="drives-tbody">
+                  <!-- rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Quick Actions (full width) -->
+          <section class="panel dash-grid-full anim-fade-up" aria-labelledby="quick-actions-heading">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title" id="quick-actions-heading">Quick Actions</h2>
+                <p class="panel-subtitle">Frequently used recruiter tools</p>
+              </div>
+            </div>
+            <div class="quick-actions-grid">
+
+              <button class="quick-action-btn" id="qa-create"
+                style="--qa-hover-bg:rgba(0,212,255,0.1);--qa-hover-border:rgba(0,212,255,0.3);"
+                onclick="quickAction('Create Recruitment')" aria-label="Create a new recruitment drive">
+                <span class="quick-action-icon">📋</span>
+                <span class="quick-action-label">+ Create Recruitment</span>
+                <span class="quick-action-desc">Start a new drive</span>
+              </button>
+
+              <button class="quick-action-btn" id="qa-applicants"
+                style="--qa-hover-bg:rgba(34,197,94,0.1);--qa-hover-border:rgba(34,197,94,0.3);"
+                onclick="quickAction('View Applicants')" aria-label="View all applicants">
+                <span class="quick-action-icon">👥</span>
+                <span class="quick-action-label">View Applicants</span>
+                <span class="quick-action-desc">Review submissions</span>
+              </button>
+
+              <button class="quick-action-btn" id="qa-interview"
+                style="--qa-hover-bg:rgba(168,85,247,0.1);--qa-hover-border:rgba(168,85,247,0.3);"
+                onclick="quickAction('Schedule Interview')" aria-label="Schedule an interview">
+                <span class="quick-action-icon">🗓️</span>
+                <span class="quick-action-label">Schedule Interview</span>
+                <span class="quick-action-desc">Set slots &amp; invite</span>
+              </button>
+
+            </div>
+          </section>
+
+        </div><!-- /.dash-grid -->
+
+      </main><!-- /.dash-content -->
+    </div><!-- /.dash-main -->
+
+  </div><!-- /.dashboard-root -->
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+     REACT — DashboardCard Component
+     Loaded via CDN + Babel standalone (no build step needed).
+     The component is mounted into #dash-cards-root.
+════════════════════════════════════════════════════════════════ -->
+  <script type="text/babel">
+    /**
+     * DashboardCard — Reusable React stat card.
+     *
+     * Props:
+     *   title      {string}  — card label
+     *   value      {string}  — big number displayed
+     *   icon       {string}  — emoji icon
+     *   iconBg     {string}  — icon background color
+     *   iconBorder {string}  — icon border color
+     *   accent     {string}  — top bar accent color on hover
+     *   trend      {string}  — trend label e.g. "↑ 12% from last week"
+     *   trendType  {string}  — 'up' | 'down' | 'neutral'
+     */
+    function DashboardCard({ title, value, icon, iconBg, iconBorder, accent, trend, trendType }) {
+      return (
+        <div
+          className="dash-stat-card"
+          style={{ '--card-accent': accent, '--card-icon-bg': iconBg, '--card-icon-border': iconBorder }}
+        >
+          <div className="card-top-row">
+            <span className="card-title">{title}</span>
+            <div className="card-icon-wrap" aria-hidden="true">{icon}</div>
+          </div>
+          <div className="card-value">{value}</div>
+          <span className={`card-trend ${trendType}`}>{trend}</span>
+        </div>
+      );
+    }
+
+    /** Card data — green/black ClubSync palette */
+    const CARD_DATA = [
+      {
+        title:      'Total Applications',
+        value:      '84',
+        icon:       '📥',
+        iconBg:     'rgba(34, 197, 94, 0.12)',
+        iconBorder: 'rgba(34, 197, 94, 0.22)',
+        accent:     '#22c55e',
+        trend:      '↑ 12% from last week',
+        trendType:  'up',
+      },
+      {
+        title:      'Shortlisted',
+        value:      '21',
+        icon:       '⭐',
+        iconBg:     'rgba(234, 179, 8, 0.12)',
+        iconBorder: 'rgba(234, 179, 8, 0.22)',
+        accent:     '#eab308',
+        trend:      '↑ 8% from last week',
+        trendType:  'up',
+      },
+      {
+        title:      'Interviews',
+        value:      '12',
+        icon:       '🗓️',
+        iconBg:     'rgba(168, 85, 247, 0.12)',
+        iconBorder: 'rgba(168, 85, 247, 0.22)',
+        accent:     '#a855f7',
+        trend:      '↓ 2% from last week',
+        trendType:  'down',
+      },
+      {
+        title:      'Selected',
+        value:      '6',
+        icon:       '✅',
+        iconBg:     'rgba(20, 184, 166, 0.12)',
+        iconBorder: 'rgba(20, 184, 166, 0.22)',
+        accent:     '#14b8a6',
+        trend:      '↑ 50% from last week',
+        trendType:  'up',
+      },
+    ];
+
+    /** Mount all four DashboardCards directly into the grid section */
+    const mountEl = document.getElementById('dash-cards-root');
+    const root = ReactDOM.createRoot(mountEl);
+    root.render(
+      <React.Fragment>
+        {CARD_DATA.map((card, i) => (
+          <DashboardCard key={i} {...card} />
+        ))}
+      </React.Fragment>
+    );
+  </script>
+
+  <!-- Vanilla JS for all other interactions -->
+  <script src="../../js/recruiter-dashboard.js"></script>
+
+  <!-- Inline: small helpers that need DOM ready -->
+  <script>
+    /* Set welcome date/time */
+    (function () {
+      const el = document.getElementById('welcome-date');
+      if (!el) return;
+      const now = new Date();
+      const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      el.innerHTML = `
+      <span>${now.toLocaleDateString('en-IN', opts)}</span><br>
+      <span style="color:#4ade80;font-weight:600;">${now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>
+    `;
+    })();
+
+    /* Expose functions that are called via onclick from HTML */
+    /* showToast, quickAction, markAllRead, markRead are defined in recruiter-dashboard.js
+       and will be available globally since it runs as a plain script. */
+  </script>
+
+</body>
+
+</html>
