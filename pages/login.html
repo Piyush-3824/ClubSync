@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClubSync — Login</title>
+  <meta name="description" content="Login or register to ClubSync — your college club discovery and recruitment portal.">
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+
+  <!-- Cyber Grid Background -->
+  <div class="grid-container">
+    <div class="plane">
+      <div class="grid"></div>
+      <div class="glow"></div>
+    </div>
+    <div class="plane">
+      <div class="grid"></div>
+      <div class="glow"></div>
+    </div>
+  </div>
+
+  <!-- Back to Home -->
+  <a href="../index.html" class="auth-back" id="back-home">← Home</a>
+
+  <!-- Auth Card -->
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <!-- Brand -->
+      <div class="auth-brand">
+        <span class="auth-brand-name">ClubSync</span>
+        <span class="auth-brand-tag">// Access Portal</span>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="tab-login" role="tab" aria-selected="true"
+          onclick="switchTab('login')">Login</button>
+        <button class="auth-tab" id="tab-register" role="tab" aria-selected="false"
+          onclick="switchTab('register')">Register</button>
+      </div>
+
+      <!-- ── LOGIN PANEL ── -->
+      <div class="auth-panel active" id="panel-login" role="tabpanel">
+        <form id="login-form" onsubmit="handleLogin(event)" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email</label>
+            <input class="form-input" type="email" id="login-email" name="email"
+              placeholder="you@college.edu" autocomplete="email" required>
+            <span class="form-error" id="login-email-error">Please enter a valid email.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input class="form-input" type="password" id="login-password" name="password"
+              placeholder="••••••••" autocomplete="current-password" required>
+            <span class="form-error" id="login-pwd-error">Password is required.</span>
+          </div>
+
+          <button type="submit" class="auth-submit" id="login-submit-btn">
+            [ Enter System ]
+          </button>
+        </form>
+
+        <div class="auth-divider">
+          <div class="auth-divider-line"></div>
+          <span>or continue as</span>
+          <div class="auth-divider-line"></div>
+        </div>
+
+        <div style="text-align:center;">
+          <a href="explore.html" style="
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: rgba(0,255,65,0.4);
+            text-decoration: none;
+            letter-spacing: 1px;
+            border: 1px solid rgba(0,255,65,0.12);
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            transition: all 0.2s ease;
+          " id="guest-browse"
+          onmouseover="this.style.color='rgba(0,255,65,0.7)';this.style.borderColor='rgba(0,255,65,0.3)'"
+          onmouseout="this.style.color='rgba(0,255,65,0.4)';this.style.borderColor='rgba(0,255,65,0.12)'">
+            Guest Browse →
+          </a>
+        </div>
+
+        <div class="auth-bottom">
+          <p>Don't have an account? <a href="#" onclick="switchTab('register'); return false;">Register here</a></p>
+        </div>
+      </div>
+
+      <!-- ── REGISTER PANEL ── -->
+      <div class="auth-panel" id="panel-register" role="tabpanel">
+        <form id="register-form" onsubmit="handleRegister(event)" novalidate>
+
+          <!-- Role Selection -->
+          <div class="form-group">
+            <label class="form-label">I am a...</label>
+            <div class="role-selector">
+              <div class="role-option">
+                <input type="radio" name="role" id="role-student" value="student" checked>
+                <label class="role-label" for="role-student">
+                  <span class="role-icon">🎓</span>
+                  <span class="role-title">Student</span>
+                </label>
+              </div>
+              <div class="role-option">
+                <input type="radio" name="role" id="role-coordinator" value="coordinator">
+                <label class="role-label" for="role-coordinator">
+                  <span class="role-icon">🎯</span>
+                  <span class="role-title">Coordinator</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name</label>
+            <input class="form-input" type="text" id="reg-name" name="name"
+              placeholder="Your full name" autocomplete="name" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">College Email</label>
+            <input class="form-input" type="email" id="reg-email" name="email"
+              placeholder="you@college.edu" autocomplete="email" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-college">College / University</label>
+            <input class="form-input" type="text" id="reg-college" name="college"
+              placeholder="e.g. MIT, Stanford, IIT Delhi" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Create Password</label>
+            <input class="form-input" type="password" id="reg-password" name="password"
+              placeholder="Min. 8 characters" autocomplete="new-password" required>
+          </div>
+
+          <button type="submit" class="auth-submit" id="register-submit-btn">
+            [ Initialize Account ]
+          </button>
+        </form>
+
+        <div class="auth-bottom">
+          <p>Already have an account? <a href="#" onclick="switchTab('login'); return false;">Login here</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.auth-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('tab-' + tab).setAttribute('aria-selected', 'true');
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const pwd = document.getElementById('login-password').value;
+      let valid = true;
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('login-email-error').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('login-email-error').style.display = 'none';
+      }
+
+      if (!pwd) {
+        document.getElementById('login-pwd-error').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('login-pwd-error').style.display = 'none';
+      }
+
+      if (valid) {
+        const btn = document.getElementById('login-submit-btn');
+        btn.textContent = '[ Authenticating... ]';
+        btn.disabled = true;
+        setTimeout(() => { window.location.href = 'student/dashboard.html'; }, 1200);
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const btn = document.getElementById('register-submit-btn');
+      btn.textContent = '[ Creating Account... ]';
+      btn.disabled = true;
+      setTimeout(() => { window.location.href = 'explore.html'; }, 1400);
+    }
+  </script>
+
+</body>
+</html>

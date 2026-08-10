@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClubSync — Student Dashboard</title>
+  <meta name="description" content="Your personal student dashboard on ClubSync. Track applications, interviews, saved clubs and notifications.">
+  <!-- Global Design System -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <!-- Student Portal Styles -->
+  <link rel="stylesheet" href="../../css/student-dashboard.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     PORTAL SHELL
+════════════════════════════════════════ -->
+<div class="portal-shell">
+
+  <!-- ── Ambient Background ── -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-blob ambient-blob-1"></div>
+    <div class="ambient-blob ambient-blob-2"></div>
+    <div class="ambient-blob ambient-blob-3"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       STUDENT NAVBAR
+  ═══════════════════════════════════ -->
+  <header class="student-navbar" role="banner">
+    <!-- Brand -->
+    <a href="../../index.html" class="snav-brand" id="snav-brand">
+      <div class="snav-logo">CS</div>
+      <span class="snav-name">ClubSync</span>
+    </a>
+
+    <!-- Right Actions -->
+    <div class="snav-right">
+      <!-- Notification Bell -->
+      <button class="snav-notif-btn" id="snav-notif-btn" aria-label="Notifications"
+              onclick="showComingSoonToast('Full notifications page coming soon!')">
+        🔔
+        <span class="notif-badge" id="notif-badge"></span>
+      </button>
+
+      <!-- Avatar -->
+      <div class="snav-avatar" id="snav-avatar" title="My Profile"
+           onclick="showComingSoonToast('Profile page coming soon!')">
+        AV
+      </div>
+
+      <!-- Hamburger (mobile) -->
+      <button class="snav-hamburger" id="snav-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════
+       PORTAL BODY
+  ═══════════════════════════════════ -->
+  <div class="portal-body">
+
+    <!-- ── Sidebar Overlay (mobile) ── -->
+    <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════════════
+         STUDENT SIDEBAR
+    ═══════════════════════════════════ -->
+    <aside class="student-sidebar" id="student-sidebar" role="navigation" aria-label="Student portal navigation">
+
+      <span class="sidebar-section-label">Main Menu</span>
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item" id="nav-dashboard">
+          <a href="dashboard.html" id="sidebar-link-dashboard">
+            <span class="sidebar-nav-icon">🏠</span> Dashboard
+          </a>
+        </li>
+        <li class="sidebar-nav-item" id="nav-applications">
+          <a href="#" id="sidebar-link-applications"
+             onclick="showComingSoonToast('My Applications — coming in Day 3!'); return false;">
+            <span class="sidebar-nav-icon">📋</span> My Applications
+          </a>
+        </li>
+        <li class="sidebar-nav-item" id="nav-saved">
+          <a href="#" id="sidebar-link-saved"
+             onclick="showComingSoonToast('Saved Clubs — coming in Day 4!'); return false;">
+            <span class="sidebar-nav-icon">⭐</span> Saved Clubs
+          </a>
+        </li>
+        <li class="sidebar-nav-item" id="nav-notifications">
+          <a href="#" id="sidebar-link-notifications"
+             onclick="showComingSoonToast('Notifications page — coming soon!'); return false;">
+            <span class="sidebar-nav-icon">🔔</span> Notifications
+          </a>
+        </li>
+      </ul>
+
+      <span class="sidebar-section-label">Account</span>
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-item" id="nav-profile">
+          <a href="#" id="sidebar-link-profile"
+             onclick="showComingSoonToast('My Profile — coming in Day 2!'); return false;">
+            <span class="sidebar-nav-icon">👤</span> My Profile
+          </a>
+        </li>
+        <li class="sidebar-nav-item" id="nav-settings">
+          <a href="#" id="sidebar-link-settings"
+             onclick="showComingSoonToast('Settings — coming soon!'); return false;">
+            <span class="sidebar-nav-icon">⚙️</span> Settings
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-spacer"></div>
+
+      <ul class="sidebar-nav sidebar-logout">
+        <li class="sidebar-nav-item">
+          <a href="../../index.html" id="sidebar-link-logout">
+            <span class="sidebar-nav-icon">🚪</span> Logout
+          </a>
+        </li>
+      </ul>
+
+    </aside>
+
+    <!-- ══════════════════════════════════
+         DASHBOARD MAIN CONTENT
+    ═══════════════════════════════════ -->
+    <main class="dashboard-main" id="dashboard-main" role="main">
+
+      <!-- ── Welcome Banner ── -->
+      <section class="dashboard-welcome" aria-labelledby="welcome-greeting">
+        <h1 class="welcome-greeting" id="welcome-greeting">Good Morning, Arjun 👋</h1>
+        <p class="welcome-sub">Here's what's happening with your club applications.</p>
+      </section>
+
+      <!-- ── Stats Row ── -->
+      <div class="stats-row" id="stats-row" role="region" aria-label="Application statistics">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- ── Dashboard Grid ── -->
+      <div class="dashboard-grid">
+
+        <!-- ── LEFT COLUMN ── -->
+        <div class="dashboard-col-main">
+
+          <!-- Profile Completion -->
+          <section class="dash-section" aria-labelledby="profile-section-title">
+            <div class="dash-section-header">
+              <h2 class="dash-section-title" id="profile-section-title">
+                <span class="dash-section-icon">👤</span> Profile Completion
+              </h2>
+              <a href="#" class="dash-section-link"
+                 onclick="showComingSoonToast('Edit Profile coming soon!'); return false;">
+                Edit Profile →
+              </a>
+            </div>
+            <div class="dash-section-body">
+              <div id="profile-progress-wrap" class="profile-progress-wrap">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+          </section>
+
+          <!-- Recent Applications -->
+          <section class="dash-section" aria-labelledby="apps-section-title">
+            <div class="dash-section-header">
+              <h2 class="dash-section-title" id="apps-section-title">
+                <span class="dash-section-icon">📋</span> Recent Applications
+              </h2>
+              <a href="#" class="dash-section-link"
+                 onclick="showComingSoonToast('My Applications page coming in Day 3!'); return false;">
+                View All →
+              </a>
+            </div>
+            <div class="dash-section-body" id="recent-apps-list">
+              <!-- Rendered by JS -->
+            </div>
+          </section>
+
+          <!-- Upcoming Interview -->
+          <section class="dash-section" aria-labelledby="interview-section-title">
+            <div class="dash-section-header">
+              <h2 class="dash-section-title" id="interview-section-title">
+                <span class="dash-section-icon">🗓️</span> Upcoming Interview
+              </h2>
+            </div>
+            <div class="dash-section-body">
+              <div id="interview-wrap"><!-- Rendered by JS --></div>
+            </div>
+          </section>
+
+        </div><!-- /col-main -->
+
+        <!-- ── RIGHT COLUMN ── -->
+        <div class="dashboard-col-side">
+
+          <!-- Quick Actions -->
+          <section class="dash-section" aria-labelledby="qa-section-title">
+            <div class="dash-section-header">
+              <h2 class="dash-section-title" id="qa-section-title">
+                <span class="dash-section-icon">⚡</span> Quick Actions
+              </h2>
+            </div>
+            <div class="dash-section-body">
+              <div class="quick-actions-grid" id="quick-actions-grid">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+          </section>
+
+          <!-- Saved Clubs -->
+          <section class="dash-section" aria-labelledby="saved-section-title">
+            <div class="dash-section-header">
+              <h2 class="dash-section-title" id="saved-section-title">
+                <span class="dash-section-icon">⭐</span> Saved Clubs
+              </h2>
+              <a href="#" class="dash-section-link"
+                 onclick="showComingSoonToast('Saved Clubs page coming soon!'); return false;">
+                View All →
+              </a>
+            </div>
+            <div class="dash-section-body" id="saved-clubs-list">
+              <!-- Rendered by JS -->
+            </div>
+          </section>
+
+          <!-- Notifications -->
+          <section class="dash-section" aria-labelledby="notif-section-title">
+            <div class="dash-section-header">
+              <h2 class="dash-section-title" id="notif-section-title">
+                <span class="dash-section-icon">🔔</span> Notifications
+              </h2>
+              <a href="#" class="dash-section-link"
+                 onclick="showComingSoonToast('Full notifications page coming soon!'); return false;">
+                View All →
+              </a>
+            </div>
+            <div class="dash-section-body" id="notifications-list" style="position:relative;padding-left:2rem;">
+              <!-- Rendered by JS -->
+            </div>
+          </section>
+
+        </div><!-- /col-side -->
+
+      </div><!-- /dashboard-grid -->
+
+    </main><!-- /dashboard-main -->
+
+  </div><!-- /portal-body -->
+
+</div><!-- /portal-shell -->
+
+<!-- ── Toast ── -->
+<div class="sp-toast" id="sp-toast" role="status" aria-live="polite">
+  <span class="sp-toast-icon">⚡</span>
+  <span class="sp-toast-msg" id="sp-toast-msg">Coming soon!</span>
+</div>
+
+<!-- ── Scripts ── -->
+<script src="../../data/student-dashboard.js"></script>
+<script src="../../js/student-dashboard.js"></script>
+
+</body>
+</html>
