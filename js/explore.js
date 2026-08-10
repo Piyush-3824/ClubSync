@@ -14,16 +14,46 @@ let state = {
   view: 'grid',
   page: 1,
   perPage: 9,
-  saved: new Set(JSON.parse(localStorage.getItem('cs-saved') || '[]'))
+  saved: new Set(JSON.parse(localStorage.getItem('cs-saved') || '[]')),
+  advFilters: {
+    meetingTimes: [],
+    status: 'All',
+    hasOpenSpots: false
+  }
 };
 
 // ── DOM refs ──
 const grid = document.getElementById('clubs-grid');
-const resultsCount = document.getElementById('results-count');
+const featuredGrid = document.getElementById('featured-clubs-grid');
 const pageNumbers = document.getElementById('page-numbers');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const searchInput = document.getElementById('search-input');
+
+// ── Render Featured Clubs ──
+function renderFeaturedClubs() {
+  if (!featuredGrid) return;
+  // IDs for Robotics, Debate, Photography based on clubs.js
+  const featuredIds = [2, 8, 6]; 
+  const featured = state.clubs.filter(c => featuredIds.includes(c.id));
+  
+  featuredGrid.innerHTML = featured.map((club, idx) => `
+    <div class="featured-card" onclick="window.location.href='club-detail.html?id=${club.id}'" style="animation: fadeInUp 0.4s ease ${idx * 0.1}s both;">
+      ${club.recruiting ? '<div class="featured-badge">Recruiting Now</div>' : ''}
+      <img src="https://images.unsplash.com/photo-${idx === 0 ? '1485827404703-89b55fcc595e' : idx === 1 ? '1517694712202-14dd9538aa97' : '1516035069371-29a1b244cc32'}?w=600&q=80" alt="Background" class="featured-bg">
+      <div class="featured-content">
+        <div class="featured-icon">${club.emoji}</div>
+        <h3 class="featured-title">${club.name}</h3>
+        <p class="featured-desc">${club.description}</p>
+        <div class="featured-stats">
+          <span>${club.members} Members</span>
+          <span>•</span>
+          <span>${club.maxApplications - club.applications} Open Slots</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
 
 // ── Render Cards ──
 function renderCards() {
@@ -133,7 +163,7 @@ function renderCards() {
     grid.appendChild(card);
   });
 
-  resultsCount.innerHTML = `Showing <strong>${state.filtered.length}</strong> club${state.filtered.length !== 1 ? 's' : ''}`;
+  // resultsCount is removed in new UI
   renderPagination();
 }
 
@@ -172,6 +202,27 @@ function applyFiltersAndSort() {
       c.category.toLowerCase().includes(q) ||
       c.shortName.toLowerCase().includes(q)
     );
+  }
+
+  // Apply Advanced Filters
+  if (state.advFilters.hasOpenSpots) {
+    result = result.filter(c => (c.maxApplications - c.applications) > 0);
+  }
+
+  if (state.advFilters.status !== 'All') {
+    result = result.filter(c => {
+      const isActive = c.events > 0;
+      return state.advFilters.status === 'Active' ? isActive : !isActive;
+    });
+  }
+
+  if (state.advFilters.meetingTimes.length > 0) {
+    result = result.filter(c => {
+      // Mocking meeting time based on club ID for demonstration
+      const mockedTimes = ['Morning', 'Afternoon', 'Evening', 'Weekends'];
+      const clubTime = mockedTimes[c.id % 4];
+      return state.advFilters.meetingTimes.includes(clubTime);
+    });
   }
 
   switch (state.sort) {
@@ -214,6 +265,40 @@ function changePage(dir) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ── Drawer Logic ──
+function openDrawer() {
+  document.getElementById('filter-drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('filter-drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+}
+
+function updateAdvancedFilters() {
+  const checkedTimes = Array.from(document.querySelectorAll('input[name="meeting-time"]:checked')).map(cb => cb.value);
+  const status = document.querySelector('input[name="status"]:checked').value;
+  const hasOpenSpots = document.getElementById('filter-open-spots').checked;
+
+  state.advFilters = {
+    meetingTimes: checkedTimes,
+    status: status,
+    hasOpenSpots: hasOpenSpots
+  };
+
+  applyFiltersAndSort();
+}
+
+function clearAdvancedFilters() {
+  document.querySelectorAll('input[name="meeting-time"]').forEach(cb => cb.checked = false);
+  document.querySelector('input[name="status"][value="All"]').checked = true;
+  document.getElementById('filter-open-spots').checked = false;
+  
+  updateAdvancedFilters();
+  closeDrawer();
+}
+
 function toggleSave(e, clubId) {
   e.preventDefault();
   e.stopPropagation();
@@ -245,4 +330,5 @@ searchInput.addEventListener('input', (e) => {
 });
 
 // ── Initialize ──
+renderFeaturedClubs();
 applyFiltersAndSort();
