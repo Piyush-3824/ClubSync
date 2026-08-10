@@ -99,11 +99,11 @@ club-recruitment-portal/
 ## 🚀 Running Locally
 
 ```bash
-# Using npx serve (Node.js required)
-npx serve . --listen 5500
+# Install dependencies
+npm install
 
-# Then open:
-# http://localhost:5500/index.html
+# Start the development server
+npm run dev
 ```
 
 ---

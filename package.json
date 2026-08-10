@@ -1,0 +1,15 @@
+{
+  "name": "club-sync",
+  "version": "1.0.0",
+  "description": "College Club Recruitment Portal",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
